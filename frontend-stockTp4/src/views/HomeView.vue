@@ -48,7 +48,7 @@
 
             <p class="mt-1 text-[#9DB4BE] ">
               Bienvenido {{ authStore.user?.email || 'usuario' }}</p>
-            <p class="mt-1 text-amber-200 text-xs">Rol: {{ authStore.rol?.nombre || 'sin rol' }}</p>
+            <p class="mt-1 text-amber-200 text-xs">Rol: {{ authStore.rol || 'sin rol' }}</p>
           </div>
 
           <button
@@ -227,5 +227,4 @@
     </div>
   </main>
 </template>
-
 
