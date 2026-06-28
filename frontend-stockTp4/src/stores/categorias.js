@@ -23,6 +23,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       categorias.value = response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar las categorias'
+      throw err
     } finally {
       loading.value = false
     }
@@ -37,7 +38,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       return response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudo cargar la categoria'
-      throw error
+      throw err
     } finally {
       loading.value = false
     }
@@ -53,7 +54,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       await fetchCategorias() // refrescamos la lista de categorias
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al crear la categoria'
-      throw error
+      throw err
     }
   }
 
@@ -67,7 +68,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       await fetchCategorias() // refrescamos la lista de categorias
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al actualizar la categoria'
-      throw error
+      throw err
     }
   }
 
@@ -81,7 +82,7 @@ export const useCategoriasStore = defineStore('categorias', () => {
       await fetchCategorias() // refrescamos la lista de categorias
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al eliminar la categoria'
-      throw error
+      throw err
     }
   }
 

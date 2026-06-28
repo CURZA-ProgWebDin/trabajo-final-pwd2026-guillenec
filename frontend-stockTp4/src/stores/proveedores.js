@@ -23,6 +23,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
       proveedores.value = response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar los proveedores'
+      throw err
     } finally {
       loading.value = false
     }
@@ -38,7 +39,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
       await fetchProveedores()
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al crear el proveedor'
-      throw error
+      throw err
     }
   }
 
@@ -51,7 +52,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
       return response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudo cargar el proveedor'
-      throw error
+      throw err
     } finally {
       loading.value = false
     }
@@ -67,7 +68,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
       await fetchProveedores()
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al actualizar el proveedor'
-      throw error
+      throw err
     }
   }
 
@@ -81,7 +82,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
       await fetchProveedores()
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al eliminar el proveedor'
-      throw error
+      throw err
     }
   }
 

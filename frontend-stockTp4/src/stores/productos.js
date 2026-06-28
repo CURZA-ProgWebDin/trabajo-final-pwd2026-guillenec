@@ -23,6 +23,7 @@ export const useProductosStore = defineStore('productos', () => {
       productos.value = response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar los productos'
+      throw err
     } finally {
       loading.value = false
     }
@@ -37,7 +38,7 @@ export const useProductosStore = defineStore('productos', () => {
       return response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudo cargar el producto'
-      throw error
+      throw err
     } finally {
       loading.value = false
     }
@@ -81,7 +82,7 @@ export const useProductosStore = defineStore('productos', () => {
       await fetchProductos() // refrescamos la lista de productos
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al eliminar el producto'
-      throw error
+      throw err
     }
   }
 

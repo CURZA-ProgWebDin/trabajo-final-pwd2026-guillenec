@@ -17,6 +17,7 @@ export const useMovimientosStore = defineStore('movimientos', () => {
       movimientos.value = response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar los movimientos'
+      throw err
     } finally {
       loading.value = false
     }
@@ -30,6 +31,7 @@ export const useMovimientosStore = defineStore('movimientos', () => {
       return response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar los movimientos'
+      throw err
     } finally {
       loading.value = false
     }
@@ -57,5 +59,7 @@ export const useMovimientosStore = defineStore('movimientos', () => {
     loading,
     error,
     fetchMovimientos,
+    fetchMisMovimientos,
+    crearMovimiento,
   }
 })
