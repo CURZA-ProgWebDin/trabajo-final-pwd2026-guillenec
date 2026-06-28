@@ -107,28 +107,46 @@ const handleLogout = () => {
               </RouterLink>
 
               <RouterLink
-                to="/"
-                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 opacity-70"
+                to="/movimientos/registrar"
+                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 transition hover:border-[#46D5E5]/60"
               >
                 <p class="font-bold text-[#EAF4F6]">Registrar movimiento</p>
-                <p class="mt-1 text-sm text-[#9DB4BE]">Pendiente de implementar.</p>
+                <p class="mt-1 text-sm text-[#9DB4BE]">Base lista para entradas y salidas.</p>
               </RouterLink>
 
               <RouterLink
-                to="/"
-                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 opacity-70"
+                to="/movimientos/mis"
+                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 transition hover:border-[#46D5E5]/60"
               >
                 <p class="font-bold text-[#EAF4F6]">Mis movimientos</p>
-                <p class="mt-1 text-sm text-[#9DB4BE]">Pendiente de implementar.</p>
+                <p class="mt-1 text-sm text-[#9DB4BE]">Base lista para historial propio.</p>
               </RouterLink>
 
               <RouterLink
                 v-if="authStore.isAdmin"
-                to="/"
-                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 opacity-70"
+                to="/categorias"
+                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 transition hover:border-[#46D5E5]/60"
               >
-                <p class="font-bold text-[#EAF4F6]">Categorias y proveedores</p>
-                <p class="mt-1 text-sm text-[#9DB4BE]">Gestion solo admin pendiente.</p>
+                <p class="font-bold text-[#EAF4F6]">Categorias</p>
+                <p class="mt-1 text-sm text-[#9DB4BE]">Base de gestión solo admin.</p>
+              </RouterLink>
+
+              <RouterLink
+                v-if="authStore.isAdmin"
+                to="/proveedores"
+                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 transition hover:border-[#46D5E5]/60"
+              >
+                <p class="font-bold text-[#EAF4F6]">Proveedores</p>
+                <p class="mt-1 text-sm text-[#9DB4BE]">Base de gestión solo admin.</p>
+              </RouterLink>
+
+              <RouterLink
+                v-if="authStore.isAdmin"
+                to="/movimientos"
+                class="rounded-2xl border border-[#28414F] bg-[#0D1B24] p-5 transition hover:border-[#46D5E5]/60"
+              >
+                <p class="font-bold text-[#EAF4F6]">Todos los movimientos</p>
+                <p class="mt-1 text-sm text-[#9DB4BE]">Base de consulta solo admin.</p>
               </RouterLink>
             </div>
           </div>

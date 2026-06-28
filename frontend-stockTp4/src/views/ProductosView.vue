@@ -60,7 +60,11 @@ const confirmarEliminar = async (producto) => {
     return
   }
 
-  await productosStore.eliminarProducto(producto.id)
+  try {
+    await productosStore.eliminarProducto(producto.id)
+  } catch {
+    //el store ya guarda el msj en productosStore.error, no necesito volver a generar
+  }
 }
 </script>
 
