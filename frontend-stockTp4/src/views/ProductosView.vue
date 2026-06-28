@@ -64,25 +64,33 @@ onMounted(() => {
                 :key="producto.id"
                 :class="producto.stock_actual <= producto.stock_minimo ? 'bg-amber-300/10' : ''"
               >
-                <td class="px-5 py-4">
+                <td class="max-w-md px-5 py-4">
                   <p class="font-bold">{{ producto?.nombre }}</p>
-                  <p class="mt-1 text-sm text-[#9DB4BE]">{{ producto?.descripcion || 'Sin descripcion' }}</p>
+                  <p class="mt-1 max-w-xl truncate text-sm text-[#9DB4BE]">
+                  {{ producto?.descripcion || 'Sin descripcion' }}
+                </p>
                 </td>
                 <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.categoria?.nombre || '-' }}</td>
                 <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.proveedor?.nombre || '-' }}</td>
                 <td class="px-5 py-4">${{ producto?.precio_costo }}</td>
                 <td class="px-5 py-4">${{ producto?.precio_venta }}</td>
                 <td class="px-5 py-4">
-                  <div class="flex items-center gap-3">
-                    <span class="font-bold">{{ producto?.stock_actual }}</span>
-                    <span
-                      v-if="producto.stock_actual <= producto.stock_minimo"
-                      class="rounded-full bg-amber-300/20 px-3 py-1 text-xs font-bold text-amber-200"
-                    >
-                      Stock bajo
-                    </span>
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold">{{ producto?.stock_actual }}</span>
+
+                      <span
+                        v-if="producto.stock_actual <= producto.stock_minimo"
+                        class="rounded-full border border-amber-300/30 bg-amber-300/15 px-2 py-0.5 text-[11px] font-bold text-amber-200"
+                      >
+                        Bajo
+                      </span>
+                    </div>
+
+                    <p class="text-xs text-[#9DB4BE]">
+                      Mínimo: {{ producto?.stock_minimo }}
+                    </p>
                   </div>
-                  <p class="mt-1 text-xs text-[#9DB4BE]">Minimo: {{ producto?.stock_minimo }}</p>
                 </td>
                 <td v-if="authStore.isAdmin" class="px-5 py-4">
                   <div class="flex gap-2">
