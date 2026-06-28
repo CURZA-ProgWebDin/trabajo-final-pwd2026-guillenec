@@ -1,16 +1,19 @@
 import api from './api'
 
 const getMovimientos = () => {
-    return api.get('/movimientos/')
+  return api.get('/movimientos/')
 }
 
-const createMovimientoEntrada = (movimientoData) => {
-    return api.post('/movimientos/', movimientoData)
+const getMisMovimientos = () => {
+  return api.get('/movimientos/mis')
 }
 
-const createMovimientoSalida = (movimientoData) => {
-    return api.post('/movimientos/', movimientoData)
+const createMovimiento = (movimientoData) => {
+  return api.post('/movimientos/', movimientoData)
 }
 
-
-
+export {
+  getMovimientos,
+  getMisMovimientos,
+  createMovimiento,
+}
