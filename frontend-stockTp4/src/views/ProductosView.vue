@@ -1,14 +1,67 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useProductosStore } from '@/stores/productos'
+import { useCategoriasStore } from '@/stores/categorias'
+import { useProveedoresStore } from '@/stores/proveedores'
+import ProductoForm from '@/components/productos/ProductoForm.vue'
+import ProductosTable from '@/components/productos/ProductosTable.vue'
 
 const authStore = useAuthStore()
 const productosStore = useProductosStore()
+const categoriasStore = useCategoriasStore()
+const proveedoresStore = useProveedoresStore()
+
+const mostrarFormulario = ref(false)
+const productoEditando = ref(null)
+
+const tituloFormulario = computed(() =>
+  productoEditando.value ? 'Editar producto' : 'Nuevo producto',
+)
 
 onMounted(() => {
   productosStore.fetchProductos()
+
+  if (authStore.isAdmin) {
+    categoriasStore.fetchCategorias()
+    proveedoresStore.fetchProveedores()
+  }
 })
+
+const abrirCrear = () => {
+  productoEditando.value = null
+  mostrarFormulario.value = true
+}
+
+const abrirEditar = (producto) => {
+  productoEditando.value = producto
+  mostrarFormulario.value = true
+}
+
+const cerrarFormulario = () => {
+  mostrarFormulario.value = false
+  productoEditando.value = null
+}
+
+const guardarProducto = async (productoData) => {
+  if (productoEditando.value) {
+    await productosStore.actualizarProducto(productoEditando.value.id, productoData)
+  } else {
+    await productosStore.crearProducto(productoData)
+  }
+
+  cerrarFormulario()
+}
+
+const confirmarEliminar = async (producto) => {
+  const confirmado = window.confirm(`¿Eliminar el producto "${producto.nombre}"?`)
+
+  if (!confirmado) {
+    return
+  }
+
+  await productosStore.eliminarProducto(producto.id)
+}
 </script>
 
 <template>
@@ -17,15 +70,19 @@ onMounted(() => {
       <header class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#86E7D3]">Stock</p>
+
           <h1 class="mt-2 text-4xl font-black text-[#EAF4F6]">Productos</h1>
+
           <p class="mt-2 text-[#9DB4BE]">
-            Listado general con categoria, proveedor y alerta de stock bajo.
+            Listado general con categoría, proveedor y alerta de stock bajo.
           </p>
         </div>
 
         <button
           v-if="authStore.isAdmin"
+          type="button"
           class="rounded-xl bg-[#46D5E5] px-5 py-3 font-semibold text-[#08141D] transition hover:bg-[#31C3D4]"
+          @click="abrirCrear"
         >
           Nuevo producto
         </button>
@@ -39,84 +96,44 @@ onMounted(() => {
       </div>
 
       <div
-        class="overflow-hidden rounded-3xl border border-[#28414F] bg-[#13222D]/80 shadow-2xl shadow-black/20"
+        v-if="productosStore.success"
+        class="mb-6 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-emerald-200"
       >
-        <div v-if="productosStore.loading" class="p-8 text-center text-[#9DB4BE]">
-          Cargando productos...
-        </div>
-
-        <div
-          v-else-if="productosStore.productos.length === 0"
-          class="p-8 text-center text-[#9DB4BE]"
-        >
-          No hay productos cargados.
-        </div>
-
-        <div v-else class="overflow-x-auto">
-          <table class="w-full min-w-225 text-left">
-            <thead class="border-b border-[#28414F] bg-[#0D1B24]/80 text-sm text-[#86E7D3]">
-              <tr>
-                <th class="px-5 py-4">Producto</th>
-                <th class="px-5 py-4">Categoria</th>
-                <th class="px-5 py-4">Proveedor</th>
-                <th class="px-5 py-4">Costo</th>
-                <th class="px-5 py-4">Venta</th>
-                <th class="px-5 py-4">Stock</th>
-                <th v-if="authStore.isAdmin" class="px-5 py-4">Acciones</th>
-              </tr>
-            </thead>
-
-            <tbody class="divide-y divide-[#28414F]/70 text-[#EAF4F6]">
-              <tr
-                v-for="producto in productosStore.productos"
-                :key="producto.id"
-                :class="producto.stock_actual <= producto.stock_minimo ? 'bg-amber-300/10' : ''"
-              >
-                <td class="max-w-md px-5 py-4">
-                  <p class="font-bold">{{ producto?.nombre }}</p>
-                  <p class="mt-1 max-w-xl truncate text-sm text-[#9DB4BE]">
-                    {{ producto?.descripcion || 'Sin descripcion' }}
-                  </p>
-                </td>
-                <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.categoria?.nombre || '-' }}</td>
-                <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.proveedor?.nombre || '-' }}</td>
-                <td class="px-5 py-4">${{ producto?.precio_costo }}</td>
-                <td class="px-5 py-4">${{ producto?.precio_venta }}</td>
-                <td class="px-5 py-4">
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                      <span class="font-bold">{{ producto?.stock_actual }}</span>
-
-                      <span
-                        v-if="producto.stock_actual <= producto.stock_minimo"
-                        class="rounded-full border border-amber-300/30 bg-amber-300/15 px-2 py-0.5 text-[11px] font-bold text-amber-200"
-                      >
-                        Bajo
-                      </span>
-                    </div>
-
-                    <p class="text-xs text-[#9DB4BE]">Mínimo: {{ producto?.stock_minimo }}</p>
-                  </div>
-                </td>
-                <td v-if="authStore.isAdmin" class="px-5 py-4">
-                  <div class="flex gap-2">
-                    <button
-                      class="rounded-lg border border-[#46D5E5]/40 px-3 py-2 text-sm text-[#86E7D3]"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      class="rounded-lg border border-red-300/40 px-3 py-2 text-sm text-red-200"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {{ productosStore.success }}
       </div>
+
+      <ProductoForm
+        v-if="authStore.isAdmin && mostrarFormulario"
+        :titulo="tituloFormulario"
+        :producto="productoEditando"
+        :categorias="categoriasStore.categorias"
+        :proveedores="proveedoresStore.proveedores"
+        :loading="productosStore.loading"
+        @submit="guardarProducto"
+        @cancel="cerrarFormulario"
+      />
+
+      <div
+        v-if="productosStore.loading && !mostrarFormulario"
+        class="rounded-3xl border border-[#28414F] bg-[#13222D]/80 p-8 text-center text-[#9DB4BE]"
+      >
+        Cargando productos...
+      </div>
+
+      <div
+        v-else-if="productosStore.productos.length === 0"
+        class="rounded-3xl border border-[#28414F] bg-[#13222D]/80 p-8 text-center text-[#9DB4BE]"
+      >
+        No hay productos cargados.
+      </div>
+
+      <ProductosTable
+        v-else
+        :productos="productosStore.productos"
+        :is-admin="authStore.isAdmin"
+        @edit="abrirEditar"
+        @delete="confirmarEliminar"
+      />
     </section>
   </main>
 </template>

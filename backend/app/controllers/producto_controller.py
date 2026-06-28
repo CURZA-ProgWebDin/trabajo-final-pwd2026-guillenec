@@ -144,7 +144,9 @@ class ProductoController(Controller):
 
         except IntegrityError:
             db.session.rollback()
-            return jsonify({"message": "error de integridad en la base de datos"}), 409
+            return jsonify({
+                "message": "No se puede eliminar el producto porque tiene movimientos de stock asociados"
+            }), 409
 
         except Exception as e:
             db.session.rollback()

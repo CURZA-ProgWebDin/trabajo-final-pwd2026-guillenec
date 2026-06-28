@@ -58,12 +58,12 @@ export const useProveedoresStore = defineStore('proveedores', () => {
     }
   }
 
-  const actualizarProveedor = async (id, proceedorData) => {
+  const actualizarProveedor = async (id, proveedorData) => {
     error.value = ''
     success.value = ''
 
     try {
-      const response = await updateProveedor(id, proceedorData)
+      const response = await updateProveedor(id, proveedorData)
       success.value = response.data.message || 'Proveedor actualizado correctamente'
       await fetchProveedores()
     } catch (err) {
