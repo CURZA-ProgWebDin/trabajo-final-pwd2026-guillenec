@@ -32,7 +32,7 @@ const router = createRouter({
     {
       path: '/movimientos',
       meta: { requiresAuth: true, roles: ['admin'] },
-    }
+    },
   ],
 })
 

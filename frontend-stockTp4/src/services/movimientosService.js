@@ -12,8 +12,4 @@ const createMovimiento = (movimientoData) => {
   return api.post('/movimientos/', movimientoData)
 }
 
-export {
-  getMovimientos,
-  getMisMovimientos,
-  createMovimiento,
-}
+export { getMovimientos, getMisMovimientos, createMovimiento }

@@ -1,6 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { getProductos, createProducto, updateProducto, deleteProducto } from '@/services/productosService'
+import {
+  getProductos,
+  getProductoById,
+  createProducto,
+  updateProducto,
+  deleteProducto,
+} from '@/services/productosService'
 
 export const useProductosStore = defineStore('productos', () => {
   const productos = ref([])
@@ -17,6 +23,21 @@ export const useProductosStore = defineStore('productos', () => {
       productos.value = response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'No se pudieron cargar los productos'
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const fetchProductoById = async (id) => {
+    loading.value = true
+    error.value = ''
+
+    try {
+      const response = await getProductoById(id)
+      return response.data
+    } catch (err) {
+      error.value = err.response?.data?.message || 'No se pudo cargar el producto'
+      throw error
     } finally {
       loading.value = false
     }
@@ -57,7 +78,7 @@ export const useProductosStore = defineStore('productos', () => {
     try {
       const response = await deleteProducto(id)
       success.value = response.data.message || 'Producto eliminado correctamente'
-      await fetchProductos() // refrescamos la lista de productos      
+      await fetchProductos() // refrescamos la lista de productos
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al eliminar el producto'
       throw error
@@ -70,6 +91,7 @@ export const useProductosStore = defineStore('productos', () => {
     error,
     success,
     fetchProductos,
+    fetchProductoById,
     crearProducto,
     actualizarProducto,
     eliminarProducto,

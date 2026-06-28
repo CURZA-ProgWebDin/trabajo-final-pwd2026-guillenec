@@ -20,10 +20,4 @@ const deleteCategoria = (id) => {
   return api.delete(`/categorias/${id}`)
 }
 
-export {
-  getCategorias,
-  getCategoriaById,
-  createCategoria,
-  updateCategoria,
-  deleteCategoria,
-}
+export { getCategorias, getCategoriaById, createCategoria, updateCategoria, deleteCategoria }

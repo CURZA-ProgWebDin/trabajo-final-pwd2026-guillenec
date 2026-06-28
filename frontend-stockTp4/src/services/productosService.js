@@ -20,10 +20,4 @@ const deleteProducto = (id) => {
   return api.delete(`/productos/${id}`)
 }
 
-export {
-  getProductos,
-  getProductoById,
-  createProducto,
-  updateProducto,
-  deleteProducto,
-}
+export { getProductos, getProductoById, createProducto, updateProducto, deleteProducto }

@@ -23,13 +23,17 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <main class="relative min-h-screen overflow-hidden bg-linear-to-br from-[#09141D] via-[#10202B] to-[#183647]">
+  <main
+    class="relative min-h-screen overflow-hidden bg-linear-to-br from-[#09141D] via-[#10202B] to-[#183647]"
+  >
     <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-cyan-400/15 blur-[150px]" />
     <div class="absolute right-0 bottom-0 h-112 w-md rounded-full bg-emerald-300/10 blur-[170px]" />
 
     <div class="relative z-10">
       <header class="border-b border-[#28414F]/70 bg-[#13222D]/70 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-8 py-5 md:flex-row md:items-center md:justify-between">
+        <div
+          class="mx-auto flex max-w-7xl flex-col gap-4 px-8 py-5 md:flex-row md:items-center md:justify-between"
+        >
           <div>
             <h1 class="text-3xl font-black text-[#EAF4F6]">Dashboard</h1>
             <p class="mt-1 text-[#9DB4BE]">Bienvenido {{ authStore.user?.email || 'usuario' }}</p>
@@ -49,7 +53,9 @@ const handleLogout = () => {
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           <div class="rounded-3xl border border-[#28414F] bg-[#13222D]/70 p-6 backdrop-blur-xl">
             <p class="text-sm text-[#9DB4BE]">Productos</p>
-            <h2 class="mt-3 text-4xl font-bold text-[#EAF4F6]">{{ productosStore.productos.length }}</h2>
+            <h2 class="mt-3 text-4xl font-bold text-[#EAF4F6]">
+              {{ productosStore.productos.length }}
+            </h2>
             <p class="mt-2 text-xs text-[#9DB4BE]">Registrados en stock</p>
           </div>
 
@@ -67,18 +73,25 @@ const handleLogout = () => {
 
           <div class="rounded-3xl border border-[#28414F] bg-[#13222D]/70 p-6 backdrop-blur-xl">
             <p class="text-sm text-[#9DB4BE]">Sesión</p>
-            <span class="mt-3 inline-flex rounded-full bg-emerald-400/20 px-4 py-2 text-sm font-semibold text-emerald-300">
+            <span
+              class="mt-3 inline-flex rounded-full bg-emerald-400/20 px-4 py-2 text-sm font-semibold text-emerald-300"
+            >
               Activa
             </span>
           </div>
         </div>
 
-        <div v-if="productosStore.error" class="mt-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200">
+        <div
+          v-if="productosStore.error"
+          class="mt-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200"
+        >
           {{ productosStore.error }}
         </div>
 
         <div class="mt-8 grid gap-8 lg:grid-cols-2">
-          <div class="rounded-3xl border border-[#28414F] bg-[#13222D]/70 p-8 backdrop-blur-xl lg:col-span-2">
+          <div
+            class="rounded-3xl border border-[#28414F] bg-[#13222D]/70 p-8 backdrop-blur-xl lg:col-span-2"
+          >
             <h2 class="text-2xl font-bold text-[#EAF4F6]">Accesos rápidos</h2>
             <p class="mt-3 text-[#9DB4BE]">
               Entrá a las secciones principales del sistema de gestión de stock.

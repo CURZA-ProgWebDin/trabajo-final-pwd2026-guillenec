@@ -31,16 +31,24 @@ onMounted(() => {
         </button>
       </header>
 
-      <div v-if="productosStore.error" class="mb-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200">
+      <div
+        v-if="productosStore.error"
+        class="mb-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200"
+      >
         {{ productosStore.error }}
       </div>
 
-      <div class="overflow-hidden rounded-3xl border border-[#28414F] bg-[#13222D]/80 shadow-2xl shadow-black/20">
+      <div
+        class="overflow-hidden rounded-3xl border border-[#28414F] bg-[#13222D]/80 shadow-2xl shadow-black/20"
+      >
         <div v-if="productosStore.loading" class="p-8 text-center text-[#9DB4BE]">
           Cargando productos...
         </div>
 
-        <div v-else-if="productosStore.productos.length === 0" class="p-8 text-center text-[#9DB4BE]">
+        <div
+          v-else-if="productosStore.productos.length === 0"
+          class="p-8 text-center text-[#9DB4BE]"
+        >
           No hay productos cargados.
         </div>
 
@@ -67,8 +75,8 @@ onMounted(() => {
                 <td class="max-w-md px-5 py-4">
                   <p class="font-bold">{{ producto?.nombre }}</p>
                   <p class="mt-1 max-w-xl truncate text-sm text-[#9DB4BE]">
-                  {{ producto?.descripcion || 'Sin descripcion' }}
-                </p>
+                    {{ producto?.descripcion || 'Sin descripcion' }}
+                  </p>
                 </td>
                 <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.categoria?.nombre || '-' }}</td>
                 <td class="px-5 py-4 text-[#C9D7DC]">{{ producto?.proveedor?.nombre || '-' }}</td>
@@ -87,17 +95,19 @@ onMounted(() => {
                       </span>
                     </div>
 
-                    <p class="text-xs text-[#9DB4BE]">
-                      Mínimo: {{ producto?.stock_minimo }}
-                    </p>
+                    <p class="text-xs text-[#9DB4BE]">Mínimo: {{ producto?.stock_minimo }}</p>
                   </div>
                 </td>
                 <td v-if="authStore.isAdmin" class="px-5 py-4">
                   <div class="flex gap-2">
-                    <button class="rounded-lg border border-[#46D5E5]/40 px-3 py-2 text-sm text-[#86E7D3]">
+                    <button
+                      class="rounded-lg border border-[#46D5E5]/40 px-3 py-2 text-sm text-[#86E7D3]"
+                    >
                       Editar
                     </button>
-                    <button class="rounded-lg border border-red-300/40 px-3 py-2 text-sm text-red-200">
+                    <button
+                      class="rounded-lg border border-red-300/40 px-3 py-2 text-sm text-red-200"
+                    >
                       Eliminar
                     </button>
                   </div>
