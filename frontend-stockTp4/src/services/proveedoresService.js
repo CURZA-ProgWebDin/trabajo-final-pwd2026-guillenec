@@ -8,15 +8,22 @@ const getProveedorById = (id) => {
     return api.get(`/proveedores/${id}`)
 }
 
-const createProveedores = (proveedoresData) => {
+const createProveedor = (proveedoresData) => {
     return api.post('/proveedores/', proveedoresData)
 }
 
-const updateProveedores = (id, proveedoresData) => {
+const updateProveedor = (id, proveedoresData) => {
     return api.put(`/proveedores/${id}`, proveedoresData)
 }
 
-const deleteProveedores = (id) => {
+const deleteProveedor = (id) => {
     return api.delete(`/proveedores/${id}`)
 }
 
+export {
+  getProveedores,
+  getProveedorById,
+  createProveedor,
+  updateProveedor,
+  deleteProveedor,
+}
