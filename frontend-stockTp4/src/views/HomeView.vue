@@ -50,6 +50,12 @@ const handleLogout = () => {
       </header>
 
       <section class="mx-auto max-w-7xl p-8">
+        <div
+          v-if="$route.query.error === 'acceso-denegado'"
+          class="mb-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200"
+        >
+          Acceso denegado. No tenés permisos para entrar a esa sección.
+        </div>
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           <div class="rounded-3xl border border-[#28414F] bg-[#13222D]/70 p-6 backdrop-blur-xl">
             <p class="text-sm text-[#9DB4BE]">Productos</p>

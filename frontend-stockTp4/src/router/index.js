@@ -66,7 +66,10 @@ router.beforeEach((to) => {
   }
 
   if (to.meta.roles && !to.meta.roles.includes(authStore.rol)) {
-    return '/'
+    return {
+      path: '/',
+      query: { error: 'acceso-denegado' },
+    }
   }
 })
 
