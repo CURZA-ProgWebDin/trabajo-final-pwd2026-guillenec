@@ -104,9 +104,13 @@ No hay nota numérica — este TP es una ejercitación. Se va a revisar que 👍
 ## Preguntas de reflexión (entrega escrita)
 
 1. Justifiquen la decisión de la Parte 1 (`ApiService` genérico vs. services por dominio).
+para no tener todo en un mismo archivo , no tener mesclado endpoints de productos categorias, proveedores, etc. de esta forma mantenemos separadas las llamadas HTTP por entidad.
 2. ¿Cómo decidieron almacenar y verificar el `rol` del usuario en el frontend? ¿Qué pasa si alguien edita manualmente el `localStorage` para cambiar su rol?
+el rol lo obtenemos de /auth/me y se guarda con Piña junto con el user. por mas que lo persistimos el backend sigue siendo la fuente real de permisos. si lo modifican localStorage, no podran acceder a endpoints protegidos porque el backend valida el JWT y el rol.
 3. La validación de stock insuficiente existe tanto en el frontend como en el backend. ¿Por qué es necesaria esa duplicación? ¿Cuál es la fuente de verdad?
+Si,parla UX, la experiencia de usuario y avisar antes de enviar datos al backend. repetimos , la fuente de verdad sigue siendo el backend.
 4. ¿Qué problemas de CORS pueden surgir al consumir esta API desde Vite, y cómo se resuelven en este proyecto (`vite.config.js`)?
+Vite corre en un origen distinto al backend, por ejemplo localhost:5173 contra localhost:5002. El backend debe permitir ese origen con CORS. En este proyecto se configuró flask-cors y CORS_ORIGINS
 
 ## Entrega
 - Push a la rama `main` del repositorio generado por GitHub Classroom.
