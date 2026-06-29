@@ -46,7 +46,7 @@ export const useMovimientosStore = defineStore('movimientos', () => {
     try {
       const response = await createMovimiento(movimientoData)
       success.value = response.data.message || 'Movimiento creado correctamente'
-      await fetchMovimientos()
+      return response.data
     } catch (err) {
       error.value = err.response?.data?.message || 'Error al crear el movimiento'
       throw err
