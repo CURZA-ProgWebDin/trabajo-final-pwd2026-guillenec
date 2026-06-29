@@ -6,11 +6,25 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['delete-categoria', 'edit-categoria'])
+const emit = defineEmits(['edit', 'delete'])
 </script>
 
 <template>
-  <div>
-    <h1>Categoria Actions</h1>
+  <div class="flex gap-2">
+    <button
+      type="button"
+      class="rounded-lg border border-[#46D5E5]/40 px-3 py-2 text-sm text-[#86E7D3] transition hover:border-[#46D5E5] hover:bg-[#46D5E5]/10"
+      @click="emit('edit', categoria)"
+    >
+      Editar
+    </button>
+
+    <button
+      type="button"
+      class="rounded-lg border border-red-300/40 px-3 py-2 text-sm text-red-200 transition hover:border-red-300 hover:bg-red-400/10"
+      @click="emit('delete', categoria)"
+    >
+      Eliminar
+    </button>
   </div>
 </template>
