@@ -1,12 +1,16 @@
 <script setup>
-import { computed, onMounted } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { computed, onMounted, ref } from 'vue'
+import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useProductosStore } from '@/stores/productos'
+import ToastMessage from '@/components/ui/ToastMessage.vue'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 const productosStore = useProductosStore()
+
+const accessDeniedMessage = ref('')
 
 const productosStockBajo = computed(() =>
   productosStore.productos.filter((producto) => producto.stock_actual <= producto.stock_minimo),
@@ -14,6 +18,15 @@ const productosStockBajo = computed(() =>
 
 onMounted(() => {
   productosStore.fetchProductos()
+
+  if (route.query.error === 'acceso-denegado') {
+    accessDeniedMessage.value = 'Acceso denegado. No tenés permisos para entrar a esa sección.'
+
+    router.replace({
+      path: route.path,
+      query: {},
+    })
+  }
 })
 
 const handleLogout = () => {
@@ -50,6 +63,11 @@ const handleLogout = () => {
       </header>
 
       <section class="mx-auto max-w-7xl p-8">
+        <ToastMessage
+          :message="accessDeniedMessage"
+          type="error"
+          @close="accessDeniedMessage = ''"
+        />
         <div
           v-if="$route.query.error === 'acceso-denegado'"
           class="mb-6 rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-red-200"
